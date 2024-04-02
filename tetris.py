@@ -143,7 +143,7 @@ class Piece(object):
         self.x = x
         self.y = y 
         self.shape = shape
-        self.color = shape_colors[shape.index(shape)]
+        self.color = shape_colors[shapes.index(shape)]
         self.rotation = 0
 
 def create_grid(locked_positions={}):
@@ -167,6 +167,8 @@ def convert_shape_format(shape):
 
     for i, pos in enumerate(positions):
         positions[i] = (pos[0] - 2, pos[1] - 4)
+
+    return positions
 
 def valid_space(shape, grid):
     accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
@@ -194,14 +196,14 @@ def get_shape():
 def draw_text_middle(text, size, color, surface):  
     pass
    
-def draw_grid(surface, grid, row, col):
+def draw_grid(surface, grid):
     sx = top_left_x
     sy = top_left_y
 
     for i in range(len(grid)):
-        pygame.draw.line(surface, (128,128,128), (sx, sy + i*block_size, (sx+play_width, sy + i*block_size)))
+        pygame.draw.line(surface, (128,128,128), (sx, sy + i*block_size), (sx+play_width, sy + i*block_size))
         for j in range(len(grid[i])):
-            pygame.draw.line(surface, (128,128,128), (sx + j*block_size, sy, (sx + j*block_size, sy + play_height)))
+            pygame.draw.line(surface, (128,128,128), (sx + j*block_size, sy), (sx + j*block_size, sy + play_height))
 
 def clear_rows(grid, locked):
     pass
@@ -300,4 +302,4 @@ def main_menu(win):
 
 win = pygame.display.set_mode((s_width, s_height))
 pygame.display.set_caption('Tetris')
-main_menu()  # start game
+main_menu(win)  # start game
